@@ -20,6 +20,8 @@ defmodule Livebook.Application do
         Livebook.Storage,
         # Run migrations as soon as the storage is running
         Livebook.Migration,
+        # Start the server for managing AWS instance credentials
+        {Livebook.FileSystem.S3.Credentials, name: Livebook.S3Credentials},
         # Start the periodic version check
         Livebook.UpdateCheck,
         # Periodic measurement of system resources

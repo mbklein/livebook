@@ -1,6 +1,7 @@
 defmodule Livebook.FileSystem.S3.Client do
   alias Livebook.FileSystem
   alias Livebook.FileSystem.S3
+  alias Livebook.FileSystem.S3.Credentials
 
   @doc """
   Sends a request to the bucket to get list of objects.
@@ -262,6 +263,7 @@ defmodule Livebook.FileSystem.S3.Client do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.to_erl()
     %{host: host} = URI.parse(file_system.bucket_url)
     headers = [{"Host", host} | headers]
+    file_system = Credentials.ensure_credentials(file_system)
 
     :aws_signature.sign_v4(
       file_system.access_key_id,
